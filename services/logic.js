@@ -51,7 +51,7 @@ const addEmployee=(id,empname,age,designation,salary)=>{
 
 //delete employee
 const delEmployee=(id)=>{
-    return db.employees.deleteOne({id}).then(
+    return db.Employee.deleteOne({id}).then(
         result=>{
             if(result){
                 return{
@@ -69,9 +69,58 @@ const delEmployee=(id)=>{
     )
 }
 
+//get a particular employee details
+const getEmployee=(id)=>{
+    return db.Employee.findOne({id}).then(
+        (result)=>{
+            if(result){
+                return{
+                    statusCode:200,
+                    employee:result
+                }
+            }
+            else{
+                return{
+                    statusCode:404,
+                    message:"No data"
+                }
+            }
+        }
+    )
+}
+
+//updating employee details
+const updateEmployee=(id,empname,age,designation,salary)=>{
+    return db.Employee.findOne({id}).then(
+        (result)=>{
+            if(result){
+                result.id=id;
+                result.empname=empname,
+                result.age=age,
+                result.designation=designation,
+                result.salary=salary
+                result.save();
+                return{
+                    statusCode:200,
+                    message:"Data saved successfully"
+                }
+            }
+            else{
+                return{
+                    statusCode:404,
+                    message:"Employee not found"
+    
+                }
+            }
+        }
+    )
+}
+
 
 module.exports={
     allEmployees,
     addEmployee,
-    delEmployee
+    delEmployee,
+    getEmployee,
+    updateEmployee
 }

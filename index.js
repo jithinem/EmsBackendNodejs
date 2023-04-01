@@ -48,4 +48,23 @@ server.delete('/deleteemployee/:id',(req,res)=>{
             res.status(result.statusCode).json(result);
         }
     )
+    console.log(req.params.id);
+})
+
+//api call to get an employee details
+server.get('/getanemployee/:id',(req,res)=>{
+    logic.getEmployee(req.params.id).then(
+        (result)=>{
+            res.status(result.statusCode).json(result)
+        }
+    )
+})
+
+//api call for updating employee details
+server.post('/updateEmployee',(req,res)=>{
+    logic.updateEmployee(req.body.id,req.body.empname,req.body.age,req.body.designation,req.body.salary).then(
+        (result)=>{
+            res.status(result.statusCode).json(result)
+        }
+    )
 })
